@@ -1,17 +1,17 @@
 package org.urano.prometheus;
 
-import io.prometheus.client.Counter;
+import io.prometheus.client.Gauge;
 import io.prometheus.client.exporter.HTTPServer;
 
 import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class CounterLauncher {
+public class GaugeLauncher {
 
-    private static final Counter requests = Counter.build()
-        .name("my_requests_counter")
-        .help("Total number of requests for counter object.")
+    private static final Gauge gauge = Gauge.build()
+        .name("my_requests_gauge")
+        .help("Total number of requests for gauge object.")
         .register();
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -20,11 +20,10 @@ public class CounterLauncher {
 
             long counter = 0;
             while (counter < Long.MAX_VALUE) {
-                requests.inc(random.nextInt(10));
+                gauge.set(random.nextInt(72));
                 TimeUnit.SECONDS.sleep(1);
                 counter++;
             }
         }
     }
-
 }
